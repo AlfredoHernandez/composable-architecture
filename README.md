@@ -1,3 +1,3 @@
-# ComposableArchitecture
+# Composable Architecture
 
-A description of this package.
+A Swift Package built based on TCA video series for studying.
