@@ -13,13 +13,11 @@ public func pullback<LocalValue, GlobalValue, LocalAction, GlobalAction>(
         guard let localAction = globalAction[keyPath: action] else { return [] }
         let localEffects = reducer(&globalValue[keyPath: value], localAction)
         return localEffects.map { localEffect in
-            Effect { callback in
-                localEffect.run { localAction in
-                    var globalAction = globalAction
-                    globalAction[keyPath: action] = localAction
-                    callback(globalAction)
-                }
-            }
+            localEffect.map { localAction -> GlobalAction in
+                var globalAction = globalAction
+                globalAction[keyPath: action] = localAction
+                return globalAction
+            }.eraseToEffect()
         }
     }
 }

@@ -2,18 +2,27 @@
 //  Copyright © 2022 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
-import Foundation
+import Combine
 
-public struct Effect<A> {
-    public let run: (@escaping (A) -> Void) -> Void
+public struct Effect<Output>: Publisher {
+    public typealias Failure = Never
+    let publisher: AnyPublisher<Output, Failure>
 
-    public init(run: @escaping (@escaping (A) -> Void) -> Void) {
-        self.run = run
+    public func receive<S>(subscriber: S) where S: Subscriber, Never == S.Failure, Output == S.Input {
+        self.publisher.receive(subscriber: subscriber)
     }
+}
 
-    public func map<B>(_ f: @escaping (A) -> B) -> Effect<B> {
-        Effect<B> { callback in
-            self.run { a in callback(f(a)) }
-        }
+extension Publisher where Failure == Never {
+    public func eraseToEffect() -> Effect<Output> {
+        return Effect(publisher: self.eraseToAnyPublisher())
+    }
+}
+
+extension Effect {
+    public static func sync(work: @escaping () -> Output) -> Effect<Output> {
+        return Deferred {
+            Just(work())
+        }.eraseToEffect()
     }
 }
