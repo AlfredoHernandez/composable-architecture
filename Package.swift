@@ -16,11 +16,12 @@ let package = Package(
             name: "ComposableArchitecture",
             targets: ["ComposableArchitecture"]),
     ],
-    dependencies: [ ],
+    dependencies: [],
     targets: [
         .target(
             name: "ComposableArchitecture",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "ComposableArchitectureTests",
             dependencies: ["ComposableArchitecture"]),
