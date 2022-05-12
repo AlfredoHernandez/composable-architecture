@@ -4,11 +4,11 @@
 
 import Combine
 
-public func logging<Value, Action>(
-    _ reducer: @escaping Reducer<Value, Action>
-) -> Reducer<Value, Action> {
-    { value, action in
-        let effects = reducer(&value, action)
+public func logging<Value, Action, Environment>(
+    _ reducer: @escaping Reducer<Value, Action, Environment>
+) -> Reducer<Value, Action, Environment> {
+    { value, action, environment in
+        let effects = reducer(&value, action, environment)
         let value = value
         return [
             .fireAndForget {

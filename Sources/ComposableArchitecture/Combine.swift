@@ -4,11 +4,11 @@
 
 import Foundation
 
-public func combine<Value, Action>(
-    _ reducers: Reducer<Value, Action>...
-) -> Reducer<Value, Action> {
-    { value, action in
-        let effects = reducers.flatMap { $0(&value, action) }
+public func combine<Value, Action, Environment>(
+    _ reducers: Reducer<Value, Action, Environment>...
+) -> Reducer<Value, Action, Environment> {
+    { value, action, environment in
+        let effects = reducers.flatMap { $0(&value, action, environment) }
         return effects
     }
 }
