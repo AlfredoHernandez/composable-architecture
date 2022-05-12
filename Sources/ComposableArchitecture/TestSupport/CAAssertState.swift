@@ -5,7 +5,7 @@
 import XCTest
 
 public struct Step<Value: Equatable, Action> {
-    enum StepType {
+    public enum StepType {
         case send(Action, (inout Value) -> Void)
         case receive(Action, (inout Value) -> Void)
         case fireAndForget
@@ -15,7 +15,7 @@ public struct Step<Value: Equatable, Action> {
     let file: StaticString
     let line: UInt
 
-    init(_ type: StepType, file: StaticString = #filePath, line: UInt = #line) {
+    public init(_ type: StepType, file: StaticString = #filePath, line: UInt = #line) {
         self.type = type
         self.file = file
         self.line = line
