@@ -1,8 +1,5 @@
 //
-//  File.swift
-//  
-//
-//  Created by Jesús Alfredo Hernández Alarcón on 12/05/22.
+//  Copyright © 2022 Jesús Alfredo Hernández Alarcón. All rights reserved.
 //
 
 import XCTest
