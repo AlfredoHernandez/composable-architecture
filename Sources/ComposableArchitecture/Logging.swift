@@ -4,7 +4,7 @@
 
 import Combine
 
-func logging<Value, Action>(
+public func logging<Value, Action>(
     _ reducer: @escaping Reducer<Value, Action>
 ) -> Reducer<Value, Action> {
     { value, action in
